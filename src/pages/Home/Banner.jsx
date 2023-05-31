@@ -10,26 +10,26 @@ import bannerImg6 from '../../assets/home/06.png'
 
 const Banner = () => {
     return (
-        <Carousel autoPlay={true} interval={2000} infiniteLoop>
+        <Carousel  autoPlay={true} interval={2000} infiniteLoop>
             <div>
-                <img src={bannerImg1} />
+                <img className='max-h-[500px]' src={bannerImg1} />
                
             </div>
             <div>
-                <img src={bannerImg2} />
+                <img className='max-h-[500px]' src={bannerImg2} />
             </div>
             <div>
-                <img src={bannerImg3} />
+                <img className='max-h-[500px]' src={bannerImg3} />
             </div>
             <div>
-                <img src={bannerImg4} />
+                <img className='max-h-[500px]' src={bannerImg4} />
                
             </div>
             <div>
-                <img src={bannerImg5} />
+                <img className='max-h-[500px]' src={bannerImg5} />
             </div>
             <div>
-                <img src={bannerImg6} />
+                <img className='max-h-[500px]' src={bannerImg6} />
             </div>
         </Carousel>
     );
