@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Providers/AuthProvider';
 import Swal from 'sweetalert2';
+import SocialLogin from '../pages/Home/components/SocialLogin';
 
 const Register = () => {
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
@@ -21,27 +22,35 @@ const Register = () => {
     //     console.log(name, email, password);
     // }
     const handleRegister = data => {
-        console.log(data)
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
                 updateUser(data.name, data.photoUrl)
                     .then(() => {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'user created successfully',
-                            showConfirmButton: false,
-                            timer: 1500
+                        const saveUser = { name: data.name, email: data.email, photo: data.photoUrl }
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(saveUser)
                         })
-                        reset()
-                        navigate(from, { replace: true })
-                        // logOut()
-                        //     .then(() => {
-                        //         navigate('/')
-                        //     })
-                        //     .catch(error => console.log(error))
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'user created successfully',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    reset()
+                                    navigate(from, { replace: true })
+                                }
+                            })
+
+
                     }).catch((error) => {
                         console.log(error);
                     });
@@ -97,6 +106,7 @@ const Register = () => {
                             </div>
                         </form>
                         <p className='text-center my-4'>Already have an account?<Link to='/login' className='text-info'>Login</Link></p>
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../Providers/AuthProvider';
 import Swal from 'sweetalert2';
+import SocialLogin from '../Home/components/SocialLogin';
 
 
 const Login = () => {
@@ -11,7 +12,7 @@ const Login = () => {
     const { signIn } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
-    const from = location?.state?.pathname || '/' ;
+    const from = location?.state?.pathname || '/';
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -25,19 +26,19 @@ const Login = () => {
         // console.log(email, password);
 
         signIn(email, password)
-        .then(result => {
-            const user = result.user;
-            console.log(user);
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'log in successfull',
-                showConfirmButton: false,
-                timer: 1500
-              })
-              navigate(from, {replace: true})
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'log in successfull',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                navigate(from, { replace: true })
 
-        })
+            })
 
     }
 
@@ -89,12 +90,12 @@ const Login = () => {
                                 <input onBlur={handleCaptcha} type="text" name="captcha" placeholder="write the captcha" className="input input-bordered" required />
                             </div>
 
-                            {/* TODO: disable btn for captcha */}
                             <div className="form-control mt-6">
-                                <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
+                                <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </form>
-                        <p className='text-center my-4'>New here?<Link to='/register' state={location?.state} replace className='text-info'>create an account</Link></p>
+                        <p className='text-center my-2'>New here?<Link to='/register' state={location?.state} replace className='text-info'>create an account</Link></p>
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>
