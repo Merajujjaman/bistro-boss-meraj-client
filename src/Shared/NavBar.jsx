@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Providers/AuthProvider';
 import { GiShoppingCart } from 'react-icons/gi';
 import useCart from '../Hooks/useCart';
+import useAdmin from '../Hooks/useAdmin';
 
 const NavBar = () => {
     const { logOut, user } = useContext(AuthContext)
     const [cart] = useCart()
+    const [isAdmin] = useAdmin()
     const navigate = useNavigate()
     const handleLogOut = () => {
         logOut()
@@ -19,6 +21,7 @@ const NavBar = () => {
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/menu'>Our Menu</Link></li>
         <li><Link to='/order/dessert'>Order</Link></li>
+        <li><Link to={isAdmin? 'dashboard/adminHome' : 'dashboard/userHome'}>Dashboard</Link></li>
         {
             user ? <><button onClick={handleLogOut} className='btn btn-ghost'>Log out</button></>
                 :

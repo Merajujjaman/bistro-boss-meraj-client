@@ -3,6 +3,7 @@ import useCart from '../../../Hooks/useCart';
 import { FaTrash } from 'react-icons/fa';
 import SectionTitle from '../../Home/components/SectionTitle';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const MyCart = () => {
     const [cart, refetch] = useCart()
@@ -24,7 +25,7 @@ const MyCart = () => {
                 })
                     .then(res => res.json())
                     .then(data => {
-                        if(data.deletedCount > 0){
+                        if (data.deletedCount > 0) {
                             refetch()
                             Swal.fire(
                                 'Deleted!',
@@ -33,7 +34,7 @@ const MyCart = () => {
                             )
                         }
                     })
-                
+
             }
         })
 
@@ -45,9 +46,11 @@ const MyCart = () => {
             <SectionTitle subtitle='My Cart' title='wanna add more?' ></SectionTitle>
 
             <div className='uppercase flex justify-around  gap-2 p-2 font-semibold md:text-xl h-[70px] md:w-4/5'>
-                <h1>Total Order: {cart.length}</h1>
+                <h1>Tota Order: {cart.length}</h1>
                 <h1>Total price: ${total}</h1>
-                <button className='btn btn-warning btn-sm'>pay</button>
+                <Link to='/dashboard/payment'>
+                    <button className='btn btn-warning btn-sm'>pay</button>
+                </Link>
             </div>
 
             <div className="overflow-x-auto w-full">
@@ -67,31 +70,31 @@ const MyCart = () => {
                     <tbody>
                         {/* row 1 */}
                         {
-                            cart.map((item, index) => 
-                            <tr key={item._id}>
-                                <th>
-                                    {index + 1}
-                                </th>
-                                <td>
-                                    <div className="avatar">
-                                        <div className="mask mask-squircle w-12 h-12">
-                                            <img src={item.image} alt="Food image" />
+                            cart.map((item, index) =>
+                                <tr key={item._id}>
+                                    <th>
+                                        {index + 1}
+                                    </th>
+                                    <td>
+                                        <div className="avatar">
+                                            <div className="mask mask-squircle w-12 h-12">
+                                                <img src={item.image} alt="Food image" />
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
 
-                                <td>
-                                    {item.name}
-                                </td>
+                                    <td>
+                                        {item.name}
+                                    </td>
 
-                                <td className=' justify-end'>
-                                    ${item.price}
-                                </td>
+                                    <td className=' justify-end'>
+                                        ${item.price}
+                                    </td>
 
-                                <td>
-                                    <button onClick={() => handleDelete(item)} className="btn bg-red-400 border-0 text-white"><FaTrash></FaTrash></button>
-                                </td>
-                            </tr>)
+                                    <td>
+                                        <button onClick={() => handleDelete(item)} className="btn bg-red-400 border-0 text-white"><FaTrash></FaTrash></button>
+                                    </td>
+                                </tr>)
                         }
 
                     </tbody>
